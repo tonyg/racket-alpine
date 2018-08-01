@@ -1,0 +1,6 @@
+distfiles/
+dot-abuild/
+packages/racket-alpine/
+racket-alpine-image/packages/
+racket-alpine-image/racket-alpine/racket/pkg/
+racket-alpine-image/racket-alpine/racket/src/
