@@ -1,4 +1,0 @@
-FROM alpine:3.8
-COPY packages/racket-alpine /repo
-RUN apk add --allow-untrusted /repo/`apk --print-arch`/racket-[0-9]*.apk
-CMD racket

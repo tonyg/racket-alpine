@@ -1,6 +1,5 @@
 #!/bin/sh
 rm -rf packages
 cp -a ../packages .
-rm -rf dot-abuild
-cp -a ../dot-abuild .
-docker build -t racket-alpine .
+docker build -t racket-alpine -f Dockerfile.full .
+docker build -t racket-alpine-minimal -f Dockerfile.minimal .
