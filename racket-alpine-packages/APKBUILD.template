@@ -3,26 +3,32 @@
 #
 # Partially cribbed from Jakub Jirutka's Racket 6.12 APKBUILD at
 # https://git.alpinelinux.org/cgit/aports/tree/testing/racket/APKBUILD
-#
-pkgname=racket
+
+pkgname="@@pkgname@@"
+pkgdesc="@@pkgdesc@@"
 pkgver=7.0
 pkgrel=0
-pkgdesc="The Racket programming language, full suite of default packages"
 url="https://racket-lang.org/"
 arch="all"
 license="LGPL-3.0-or-later MIT"
 depends="sqlite-libs ca-certificates libressl2.7-libcrypto libressl2.7-libssl"
-depends_dev="libffi-dev libucontext-dev sqlite-libs glib fontconfig freetype cairo pango libjpeg"
+depends_dev="@@depends_dev@@ libffi-dev libucontext-dev sqlite-libs"
 makedepends="$depends_dev"
 install=""
 subpackages="$pkgname-dev $pkgname-doc"
-source="https://mirror.racket-lang.org/installers/$pkgver/racket-$pkgver-src.tgz
-libressl.patch
-musl-fixes.patch"
+source="@@source@@
+common-patches/libressl.patch
+common-patches/musl-fixes.patch"
 builddir="$srcdir/racket-$pkgver"
-sha512sums="98be3a7f0fbe38ae5febd2a9a3c81baede7dd7b3f3a9ed3ce68321389a68f74c6a8e24170013f7ca4fd725a79a3d5cfbda2e26f0f75163076e3b98f43094507f  racket-7.0-src.tgz
+sha512sums="@@sha512sums@@
 c9522b96303277e26b8cdd070f23bf75fd96e393e09719b38396604b34b76e81164a6f262d7d41beab74294dc0cdcb6aa8aaf2e15acf7043c293e9cae8634cab  libressl.patch
 4409d4442acf3122acec698f3ee3be7163eb630df78cf2d3c59b95d172db32de6de13cb056e384f71587722481e58af62f55a347dd7cd93065dd908e30852e20  musl-fixes.patch"
+
+unpack() {
+        default_unpack
+        # ewww:
+        ln -sf . common-patches
+}
 
 prepare() {
         default_prepare
