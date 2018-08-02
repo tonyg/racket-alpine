@@ -9,4 +9,4 @@ RUN su - build /bin/sh -c 'git config --global user.email "tonygarnockjones@gmai
 RUN echo 'PACKAGER="Tony Garnock-Jones <tonygarnockjones@gmail.com>"' >> /etc/abuild.conf
 RUN addgroup build abuild
 RUN su - build /bin/sh -c 'ln -sf /home/build/racket-alpine/dot-abuild /home/build/.abuild'
-CMD su - build /bin/sh -c 'cd racket-alpine/racket-alpine-package; ./build.sh'
+CMD su - build /bin/sh -c 'cd racket-alpine/racket-alpine-packages; ./build.sh'

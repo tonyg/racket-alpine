@@ -1,0 +1,44 @@
+# Contributor: Tony Garnock-Jones <tonygarnockjones@gmail.com>
+# Maintainer:
+#
+# Partially cribbed from Jakub Jirutka's Racket 6.12 APKBUILD at
+# https://git.alpinelinux.org/cgit/aports/tree/testing/racket/APKBUILD
+#
+pkgname=racket-minimal
+pkgver=7.0
+pkgrel=0
+pkgdesc="The Racket programming language, minimal installed packages"
+url="https://racket-lang.org/"
+arch="all"
+license="LGPL-3.0-or-later MIT"
+depends="sqlite-libs ca-certificates libressl2.7-libcrypto libressl2.7-libssl"
+depends_dev="libffi-dev libucontext-dev sqlite-libs"
+makedepends="$depends_dev"
+install=""
+subpackages="$pkgname-dev $pkgname-doc"
+source="https://mirror.racket-lang.org/installers/$pkgver/racket-minimal-$pkgver-src.tgz
+libressl.patch
+musl-fixes.patch"
+builddir="$srcdir/racket-$pkgver"
+sha512sums="b1b30891d0f72cff1baad19530be7c12a5a640bf3ccbb246aa99f00717129814ab02f974ae15214422867d7b7ce9ea664fa685ffd468505be8e1c4166db41caf  racket-minimal-7.0-src.tgz
+c9522b96303277e26b8cdd070f23bf75fd96e393e09719b38396604b34b76e81164a6f262d7d41beab74294dc0cdcb6aa8aaf2e15acf7043c293e9cae8634cab  libressl.patch
+4409d4442acf3122acec698f3ee3be7163eb630df78cf2d3c59b95d172db32de6de13cb056e384f71587722481e58af62f55a347dd7cd93065dd908e30852e20  musl-fixes.patch"
+
+prepare() {
+        default_prepare
+        cd "$builddir"
+        rm -Rf src/foreign/libffi
+}
+
+build() {
+	cd "$builddir"/src
+        export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+        export LIBS="$LIBS -lucontext"
+        ./configure --prefix=/usr --disable-docs
+        make
+}
+
+package() {
+	cd "$builddir"/src
+        make install DESTDIR="$pkgdir"
+}
