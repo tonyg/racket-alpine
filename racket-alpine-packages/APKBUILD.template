@@ -6,7 +6,7 @@
 
 pkgname="@@pkgname@@"
 pkgdesc="@@pkgdesc@@"
-pkgver=7.0
+pkgver=7.2
 pkgrel=0
 url="https://racket-lang.org/"
 arch="all"
