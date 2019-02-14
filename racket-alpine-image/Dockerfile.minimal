@@ -1,4 +1,5 @@
+# syntax=docker/dockerfile:experimental
 FROM alpine:3.8
-COPY packages/racket-alpine /repo
-RUN apk add --allow-untrusted /repo/`apk --print-arch`/racket-minimal-[0-9]*.apk && rm -rf /repo
+RUN --mount=type=bind,source=packages/racket-alpine,target=/repo \
+    apk add --allow-untrusted /repo/`apk --print-arch`/racket-minimal-[0-9]*.apk
 CMD racket
