@@ -1,7 +1,7 @@
 FROM alpine:3.8
 RUN apk update && apk upgrade
 RUN apk add alpine-sdk
-RUN adduser -D build
+RUN adduser -D -s /bin/sh build
 RUN passwd -d build
 RUN echo "build ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN su - build /bin/sh -c 'git config --global user.name "Tony Garnock-Jones"'
