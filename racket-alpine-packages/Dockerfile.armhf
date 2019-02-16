@@ -1,0 +1,12 @@
+FROM multiarch/alpine:armhf-v3.8
+RUN apk update && apk upgrade
+RUN apk add alpine-sdk
+RUN adduser -D -s /bin/sh build
+RUN passwd -d build
+RUN echo "build ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN su - build -c "/bin/sh --login -c 'git config --global user.name \"Tony Garnock-Jones\"'"
+RUN su - build -c "/bin/sh --login -c 'git config --global user.email \"tonygarnockjones@gmail.com\"'"
+RUN echo 'PACKAGER="Tony Garnock-Jones <tonygarnockjones@gmail.com>"' >> /etc/abuild.conf
+RUN addgroup build abuild
+RUN su - build -c "/bin/sh --login -c 'ln -sf /home/build/racket-alpine/dot-abuild /home/build/.abuild'"
+CMD su - build -c "/bin/sh --login -c 'cd racket-alpine/racket-alpine-packages; ./build.sh'"
